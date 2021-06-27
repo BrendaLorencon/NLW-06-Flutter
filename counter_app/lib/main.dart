@@ -5,17 +5,35 @@ void main() {
       theme: ThemeData(primarySwatch: Colors.purple), home: HomePage()));
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  var count = 0;
+
+  void increment() {
+    count++;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Meu Primeiro App"),
       ),
-      body: Center(child: Text("CONTADOR\n0", textAlign: TextAlign.center)),
+      body: Center(
+          child: Text(
+        "CONTADOR\n$count",
+        textAlign: TextAlign.center,
+      )),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          increment();
+        },
       ),
     );
   }
