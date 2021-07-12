@@ -1,21 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:payflow/shared/themes/app_colors.dart';
-
-import 'modules/login/login_page.dart';
 
 void main() {
-  runApp(AppWidget());
+  runApp(AppFireBase());
 }
 
-class AppWidget extends StatelessWidget {
+class AppFireBase extends StatefulWidget {
   // This widget is the root of your application.
   @override
+  _AppFireBaseState createState() => _AppFireBaseState();
+}
+
+class _AppFireBaseState extends State<AppFireBase> {
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Pay Flow',
-      theme: ThemeData(primaryColor: AppColors.primary),
-      // home: SplashPage(),
-      home: LoginPage(),
+    return FutureBuilder(
+      future: _initialization,
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return SomethingWentWrong();
+        }
+        if (snapshot.connectionState == ConnectionState.done) {
+          return MyAwesomeApp();
+        }
+        return Loading();
+      },
     );
   }
 }
